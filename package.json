@@ -1,0 +1,34 @@
+{
+  "name": "selenium-cucumber-easy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cunhabruno/selenium-cucumber-easy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cunhabruno/selenium-cucumber-easy/issues"
+  },
+  "homepage": "https://github.com/cunhabruno/selenium-cucumber-easy#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "cucumber": "^4.2.1",
+    "path": "^0.12.7",
+    "selenium-webdriver": "^4.0.0-alpha.1"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ],
+    "retainLines": true
+  }
+}
