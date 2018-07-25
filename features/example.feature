@@ -6,5 +6,5 @@ Feature: Example feature
 
   Scenario: Open Ulbra main page
     Given I go to the following page "http://www.ulbra.br"
-    When I select the value "Gravatai" on "Select unit dropdown" on "Ulbra main page"
+    When I select the value " RS | Gravataí" on "Unidade dropdown" dropdown on "Ulbra main page"
     Then I can see "Ulbra Gravatai Main page"

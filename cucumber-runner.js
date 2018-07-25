@@ -3,7 +3,7 @@ import path from 'path'
 
 import webdriver from 'selenium-webdriver';
 
-global.browser = new webdriver.Builder().usingServer('http://10.95.2.220:4444/wd/hub').withCapabilities({'browserName': 'chrome'}).build();
+global.browser = new webdriver.Builder().usingServer('http://192.168.25.18:4444/wd/hub').withCapabilities({'browserName': 'chrome'}).build();
 
 const cucumberCli = new Cli({
     argv: ['node', 'cucumber-js',  path.resolve('features/example.feature'), '--require', path.resolve('.', 'features/step-definitions/')],
