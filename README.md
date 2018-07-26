@@ -53,3 +53,9 @@ Component Name = If you mapped with a 3 level JSON the child of page name can be
     ##OR
      And I insert the value "text to insert" on "Component Name" on "Text box element" on "Page name"
 ```
+There will be a lot of steps like: selecting item in a dropdown, verifying an element text, waiting an element to be displayed, checking the presence and visibility of an element, mouse hover an element etc...
+
+#### Automation Helper API
+You may also need to build your own steps, you can also do this with the help of out helper API.
+
+The helper API will cover almost all actions and validations a QA may want to do in your app.
