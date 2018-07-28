@@ -1,4 +1,8 @@
 import {By} from 'selenium-webdriver';
 export default {
-    'UNIDADEDROPDOWN': By.name('superior')
+    'LANDINGPAGE' : {
+        'UNIDADEDROPDOWN': By.name('superior'),
+        'LOGO' : By.id('logo')
+    }
+
 }
