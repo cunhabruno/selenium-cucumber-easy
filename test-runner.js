@@ -4,9 +4,16 @@ export default {
     browserName: 'chrome',
 
     pageObjects: [
-        '/home/cunha/selenium-cucumber-easy/page-objects/landing-page.js',
-        '/home/cunha/selenium-cucumber-easy/page-objects/home-page.js'
+        'page-objects\\landing-page.js',
+        'page-objects\\home-page.js'
     ],
 
-    featureFiles : []
+    featureFiles : [
+        'features/example.feature',
+        'features/example2.feature'
+    ],
+
+    stepDefinitions : [
+        'features/step-definitions'
+    ]
 }

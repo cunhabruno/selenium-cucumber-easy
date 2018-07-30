@@ -4,8 +4,8 @@ import path from 'path'
 import webdriver from 'selenium-webdriver';
 
 global.browser = new webdriver.Builder().usingServer('http://localhost:4444/wd/hub').withCapabilities({'browserName': 'chrome'}).build();
-
-const pageObjFiles = ['/home/cunha/selenium-cucumber-easy/page-objects/landing-page.js', '/home/cunha/selenium-cucumber-easy/page-objects/home-page.js'];
+browser.get('http://www.ulbra.br');
+const pageObjFiles = ['page-objects/landing-page.js', 'page-objects/home-page.js'];
 
 const generateMapper = async (pageObjFiles) => {
     let fileArr = [];
@@ -18,8 +18,8 @@ const generateMapper = async (pageObjFiles) => {
     fileArr.forEach(async file => {
         hashArr.push(require(file).default);
     });
-    console.log(hashArr[0]['LOGO']);
-    browser.findElement(hashArr[0]['LOGO']).click();
+    console.log(hashArr[1]['HOMEPAGE']['test']);
+    browser.findElement(hashArr[1]['HOMEPAGE']['test']).click();
 };
 
 generateMapper(pageObjFiles);

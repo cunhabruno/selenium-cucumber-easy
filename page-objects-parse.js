@@ -4,11 +4,14 @@ export default class PageObjectsParse {
     }
 
     get2LevelsLocator(parent, child1) {
+        let locatorFound = null;
         this.pageObjectsObj.forEach(mapperObj => {
-            if(mapperObj[parent] !== 'undefined'){
-                console.log(mapperObj[parent][child1]);
+            if(typeof mapperObj[parent] !== 'undefined'){
+                if(typeof mapperObj[parent][child1] !== 'undefined') {
+                    locatorFound = mapperObj[parent][child1];
+                }
             }
-
-        })
+        });
+        return locatorFound;
     }
 }

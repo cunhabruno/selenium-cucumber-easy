@@ -18,15 +18,14 @@ if(typeof runnerFilePath === 'undefined') {
 
 const runnerParser = new RunnerParser(path.resolve(runnerFilePath));
 
-global.driver = runnerParser.generateSeleniumDriver();
+global.browser = runnerParser.generateSeleniumDriver();
 
-global.mappedObjects = runnerParser.getPageObjects();
+const mappedObjects = runnerParser.getPageObjects();
 
-const pageObjParser = new PageObjectsParse(mappedObjects);
+global.pageObjects = new PageObjectsParse(mappedObjects);
 
-pageObjParser.get2LevelsLocator('HOMEPAGE', 'ULBRALOGO');
+runnerParser.getCucumberArgs();
 
-driver.get('http://google.com')
+//driver.get('http://ulbra.br')
 
-
-
+//driver.findElement(pageObjects.get2LevelsLocator('LANDINGPAGE', 'UNIDADEDROPDOWN')).click();
