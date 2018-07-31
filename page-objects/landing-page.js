@@ -1,6 +1,6 @@
 import {By} from 'selenium-webdriver';
 export default {
-    'LANDINGPAGE' : {
+    'ULBRAMAINPAGE' : {
         'UNIDADEDROPDOWN': By.name('superior'),
         'LOGO' : By.id('logo')
     }

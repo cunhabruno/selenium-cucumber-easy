@@ -4,6 +4,8 @@ export default class PageObjectsParse {
     }
 
     get2LevelsLocator(parent, child1) {
+        parent = parent.toUpperCase().replace(/ /g, '');
+        child1 = child1.toUpperCase().replace(/ /g, '');
         let locatorFound = null;
         this.pageObjectsObj.forEach(mapperObj => {
             if(typeof mapperObj[parent] !== 'undefined'){

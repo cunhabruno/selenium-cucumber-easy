@@ -8,4 +8,8 @@ export default class Helpers {
         await browser.findElement(dropDownLocator).click();
         await browser.findElement(valueToSelect).click();
     }
+
+    static async clickOnElement(elementToClick) {
+        await browser.findElement(elementToClick).click();
+    }
 }

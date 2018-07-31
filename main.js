@@ -20,9 +20,7 @@ const runnerParser = new RunnerParser(path.resolve(runnerFilePath));
 
 global.browser = runnerParser.generateSeleniumDriver();
 
-const mappedObjects = runnerParser.getPageObjects();
-
-global.pageObjects = new PageObjectsParse(mappedObjects);
+global.pageObjects = runnerParser.getPageObjects();
 
 runnerParser.getCucumberArgs();
 

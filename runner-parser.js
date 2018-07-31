@@ -71,8 +71,6 @@ export default class RunnerParser {
             cwd : path.resolve('node_modules/cucumber/bin/cucumber-js'),
             stdout: process.stdout
         });
-
-        console.log(cucumberCli);
-        cucumberCli.run().then(res => {console.log('-----' + res);});
+        cucumberCli.run().then(res => {});
     }
 }

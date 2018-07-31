@@ -4,13 +4,12 @@ export default {
     browserName: 'chrome',
 
     pageObjects: [
-        'page-objects\\landing-page.js',
-        'page-objects\\home-page.js'
+        'page-objects/landing-page.js',
+        'page-objects/home-page.js'
     ],
 
     featureFiles : [
-        'features/example.feature',
-        'features/example2.feature'
+        'features/example.feature'
     ],
 
     stepDefinitions : [
