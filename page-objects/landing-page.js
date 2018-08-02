@@ -1,8 +1,9 @@
 import {By} from 'selenium-webdriver';
 export default {
     'ULBRAMAINPAGE' : {
+        'MAINPAGE': By.id('pagina'),
         'UNIDADEDROPDOWN': By.name('superior'),
-        'LOGO' : By.id('logo')
+        'GRAVATAILOGO' : By.css('[title="ULBRA Gravataí"]')
     }
 
 }

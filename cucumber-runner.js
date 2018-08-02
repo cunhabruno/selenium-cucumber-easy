@@ -3,8 +3,8 @@ import path from 'path'
 
 import webdriver from 'selenium-webdriver';
 
-global.browser = new webdriver.Builder().usingServer('http://localhost:4444/wd/hub').withCapabilities({'browserName': 'chrome'}).build();
-browser.get('http://www.ulbra.br');
+global.driver = new webdriver.Builder().usingServer('http://localhost:4444/wd/hub').withCapabilities({'browserName': 'chrome'}).build();
+driver.get('http://www.ulbra.br');
 const pageObjFiles = ['page-objects/landing-page.js', 'page-objects/home-page.js'];
 
 const generateMapper = async (pageObjFiles) => {
@@ -19,7 +19,7 @@ const generateMapper = async (pageObjFiles) => {
         hashArr.push(require(file).default);
     });
     console.log(hashArr[1]['HOMEPAGE']['test']);
-    browser.findElement(hashArr[1]['HOMEPAGE']['test']).click();
+    driver.findElement(hashArr[1]['HOMEPAGE']['test']).click();
 };
 
 generateMapper(pageObjFiles);
@@ -33,4 +33,4 @@ generateMapper(pageObjFiles);
 console.log(cucumberCli.argv);
 cucumberCli.run().then(res => {console.log('-----' + res);});*/
 
-browser.quit();
+driver.quit();

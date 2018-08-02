@@ -5,11 +5,15 @@ export default class Helpers {
             By.xpath('//*[.="' + valueToSelect + '"]') :
             valueToSelect;
 
-        await browser.findElement(dropDownLocator).click();
-        await browser.findElement(valueToSelect).click();
+        await driver.findElement(dropDownLocator).click();
+        return await driver.findElement(valueToSelect).click();
     }
 
     static async clickOnElement(elementToClick) {
-        await browser.findElement(elementToClick).click();
+        await driver.findElement(elementToClick).click();
+    }
+
+    static async checkElementExists (elementLocator, blnExists) {
+        return await driver.findElement(elementLocator).isDisplayed();
     }
 }

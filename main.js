@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import commander from 'commander';
 import path from 'path';
 import RunnerParser from "./runner-parser";
@@ -18,12 +20,8 @@ if(typeof runnerFilePath === 'undefined') {
 
 const runnerParser = new RunnerParser(path.resolve(runnerFilePath));
 
-global.browser = runnerParser.generateSeleniumDriver();
+global.driver = runnerParser.generateSeleniumDriver();
 
 global.pageObjects = runnerParser.getPageObjects();
 
 runnerParser.getCucumberArgs();
-
-//driver.get('http://ulbra.br')
-
-//driver.findElement(pageObjects.get2LevelsLocator('LANDINGPAGE', 'UNIDADEDROPDOWN')).click();

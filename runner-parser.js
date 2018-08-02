@@ -40,7 +40,7 @@ export default class RunnerParser {
        return pageObjectsObj;
     }
 
-    getCucumberArgs() {
+    async getCucumberArgs() {
         let argv = [
             'node',
             'cucumber-js'
@@ -55,6 +55,7 @@ export default class RunnerParser {
             }
         });
 
+
         argv.push('--require', path.resolve('.', 'features/step-definitions/'));
 
         this.runnerFileObj.stepDefinitions.forEach(stepsPath => {
@@ -66,11 +67,16 @@ export default class RunnerParser {
             }
         });
 
+
+        argv.push('--format');
+
+        argv.push('progress');
+
         const cucumberCli = new Cli({
             argv: argv,
             cwd : path.resolve('node_modules/cucumber/bin/cucumber-js'),
             stdout: process.stdout
         });
-        cucumberCli.run().then(res => {});
+        await cucumberCli.run();
     }
 }

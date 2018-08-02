@@ -31,5 +31,8 @@
       "es2015"
     ],
     "retainLines": true
+  },
+  "bin": {
+    "selenium-easy": "main.js"
   }
 }
