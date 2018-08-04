@@ -3,7 +3,8 @@ export default {
     'ULBRAMAINPAGE' : {
         'MAINPAGE': By.id('pagina'),
         'UNIDADEDROPDOWN': By.name('superior'),
-        'GRAVATAILOGO' : By.css('[title="ULBRA Gravataí"]')
+        'GRAVATAILOGO' : By.css('[title="ULBRA Gravataí"]'),
+        'AUTOATENDIMENTOBUTTON' : By.css('[title="AUTOATENDIMENTO"]')
     }
 
 }

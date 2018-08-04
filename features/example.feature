@@ -9,3 +9,7 @@ Feature: Example feature
     When I select the value " RS | Gravataí" on "Unidade dropdown" dropdown on "Ulbra main page"
     Then I can see "Main page" on "Ulbra Main Page"
     And I can see "Gravatai Logo" on "Ulbra Main Page"
+
+  Scenario: Log in auto atendimento
+    Given I click on "Auto atendimento Button" button on "Ulbra main page"
+    Then I can see "Auto atendimento login page" displayed

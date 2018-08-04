@@ -10,10 +10,19 @@ Given('I go to the following page {string}', async function(string) {
     await driver.get(string);
 });
 
-When('I select the value {string} on {string} dropdown on {string}', async function(value, dropDownName, pageName) {
+When(/^I select the value "([^"]*)" on "([^"]*)" dropdown on "([^"]*)"$/, async function(value, dropDownName, pageName) {
    await HelperScripts.selectValueOnDropDown(pageObjectsParser.get2LevelsLocator(pageName, dropDownName), value);
 });
 
-Then('I can see {string} on {string}', async function(childObject, parent) {
+Then(/^I can see "([^"]*)" on "([^"]*)"$/, async function(childObject, parent) {
     await HelperScripts.checkElementExists(pageObjectsParser.get2LevelsLocator(parent, childObject));
 });
+
+Then(/^I can see "([^"]*)"(?: displayed$|)$/, async function(elementName) {
+    await HelperScripts.waitVisibilityOfElement(pageObjectsParser.get1LevelLocator(elementName), 9000);
+});
+
+Given(/^I click on "([^"]*)" (?:button |)on "([^"]*)"$/, async function (childObject, parent) {
+    await HelperScripts.clickOnElement(pageObjectsParser.get2LevelsLocator(parent, childObject));
+});
+

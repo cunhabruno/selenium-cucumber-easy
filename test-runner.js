@@ -5,7 +5,7 @@ export default {
 
     pageObjects: [
         'page-objects/landing-page.js',
-        'page-objects/home-page.js'
+        'page-objects/auto-atendimento.js'
     ],
 
     featureFiles : [
