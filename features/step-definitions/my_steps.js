@@ -1,7 +1,7 @@
 import {Given, Then, When, setDefaultTimeout} from 'cucumber';
 import HelperScripts from '../../automation-scripts/helpers';
 import PageObjectsParser from '../../page-objects-parse';
-
+import assert from 'assert';
 const pageObjectsParser = new PageObjectsParser(pageObjects);
 
 setDefaultTimeout(15000);
@@ -20,6 +20,13 @@ Then(/^I can see "([^"]*)" on "([^"]*)"$/, async function(childObject, parent) {
 
 Then(/^I can see "([^"]*)"(?: displayed$|)$/, async function(elementName) {
     await HelperScripts.waitVisibilityOfElement(pageObjectsParser.get1LevelLocator(elementName), 9000);
+});
+
+Then(/^I can see new tab opened with the title "([^"]*)"$/, async function(tabTitle) {
+    const wnds = await driver.getAllWindowHandles();
+    await driver.switchTo().window(wnds[1]);
+    let actualTitle = await driver.getTitle();
+    assert.equal(actualTitle.toString().toUpperCase(), tabTitle.toUpperCase(), 'deu');
 });
 
 Given(/^I click on "([^"]*)" (?:button |)on "([^"]*)"$/, async function (childObject, parent) {

@@ -12,4 +12,5 @@ Feature: Example feature
 
   Scenario: Log in auto atendimento
     Given I click on "Auto atendimento Button" button on "Ulbra main page"
+    And I can see new tab opened with the title "Autoatendimento ULBRA"
     Then I can see "Auto atendimento login page" displayed
