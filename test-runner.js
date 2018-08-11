@@ -13,6 +13,6 @@ export default {
     ],
 
     stepDefinitions : [
-        'features/step-definitions'
+        'features/support'
     ]
 }

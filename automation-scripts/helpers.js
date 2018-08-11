@@ -14,6 +14,11 @@ export default class Helpers {
         await driver.findElement(elementToClick).click();
     }
 
+    static async writeText(elementLocator, textToAdd) {
+        await this.waitVisibilityOfElement(elementLocator, 9000);
+        await driver.findElement(elementToClick).sendKeys(textToAdd);
+    }
+
     static async checkElementExists (elementLocator, blnExists) {
         return await driver.findElement(elementLocator).isDisplayed();
     }

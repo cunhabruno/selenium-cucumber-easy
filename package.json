@@ -19,7 +19,7 @@
   "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "commander": "^2.16.0",
     "cucumber": "^4.2.1",
@@ -28,11 +28,17 @@
   },
   "babel": {
     "presets": [
-      "es2015"
+      "env"
+    ],
+    "plugins": [
+      "transform-runtime"
     ],
     "retainLines": true
   },
   "bin": {
-    "selenium-easy": "main.js"
+    "selenium-easy": "bin/selenium-easy"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-runtime": "^6.23.0"
   }
 }

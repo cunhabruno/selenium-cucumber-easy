@@ -25,7 +25,7 @@ const generateMapper = async (pageObjFiles) => {
 generateMapper(pageObjFiles);
 
 /*const cucumberCli = new Cli({
-    argv: ['node', 'cucumber-js',  path.resolve('features/example.feature'), '--require', path.resolve('.', 'features/step-definitions/')],
+    argv: ['node', 'cucumber-js',  path.resolve('features/example.feature'), '--require', path.resolve('.', 'features/support/')],
     cwd : path.resolve('node_modules/cucumber/bin/cucumber-js'),
     stdout: process.stdout
 });

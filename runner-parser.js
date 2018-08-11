@@ -29,12 +29,19 @@ export default class RunnerParser {
 
     getPageObjects() {
        let pageObjectsObj = [];
-       pageObjectsObj = this.runnerFileObj.pageObjects.map(mapPath => {
+       this.runnerFileObj.pageObjects.forEach(mapPath => {
            mapPath = path.resolve(mapPath);
-           if(fs.existsSync(mapPath)) {
-            return require(path.resolve(mapPath)).default;
-           } else {
-               throw new Error(mapPath + ' is not a valid file');
+           let stats = fs.statSync(mapPath);
+           if(stats.isFile()) {
+               if(fs.existsSync(mapPath)) {
+                   pageObjectsObj.push(require(path.resolve(mapPath)).default)
+               } else {
+                   throw new Error(mapPath + ' is not a valid file');
+               }
+           } else if (stats.isDirectory()) {
+               fs.readdirSync(mapPath).forEach(file => {
+                   pageObjectsObj.push(require(path.resolve(mapPath, file)).default)
+               })
            }
        });
        return pageObjectsObj;
@@ -55,17 +62,13 @@ export default class RunnerParser {
             }
         });
 
-
-        argv.push('--require', path.resolve('.', 'features/step-definitions/'));
-
-        this.runnerFileObj.stepDefinitions.forEach(stepsPath => {
-            stepsPath = path.resolve(stepsPath);
-            if(fs.existsSync(stepsPath)) {
+        await this.runnerFileObj.stepDefinitions.forEach(stepsPath => {
+            stepsPath = path.resolve(process.cwd(), stepsPath);
+            console.log(stepsPath);
              argv.push('--require', stepsPath);
-            } else {
-                throw new Error(stepsPath + ' is not a valid file');
-            }
         });
+
+        argv.push('--require', path.resolve(__dirname, 'features/support/'));
 
 
         argv.push('--format');
@@ -74,9 +77,10 @@ export default class RunnerParser {
 
         const cucumberCli = new Cli({
             argv: argv,
-            cwd : path.resolve('node_modules/cucumber/bin/cucumber-js'),
+            cwd : path.resolve(__dirname, 'node_modules/cucumber/bin/cucumber-js'),
             stdout: process.stdout
         });
+        console.log(cucumberCli.argv);
         await cucumberCli.run();
     }
 }

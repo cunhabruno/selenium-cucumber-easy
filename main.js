@@ -1,9 +1,8 @@
-#!/usr/bin/env node
-
 import commander from 'commander';
 import path from 'path';
 import RunnerParser from "./runner-parser";
 import PageObjectsParse from "./page-objects-parse";
+
 export let runnerFilePath;
 commander
     .version('0.0.1')

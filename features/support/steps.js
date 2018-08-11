@@ -2,7 +2,7 @@ import {Given, Then, When, setDefaultTimeout} from 'cucumber';
 import HelperScripts from '../../automation-scripts/helpers';
 import PageObjectsParser from '../../page-objects-parse';
 import assert from 'assert';
-const pageObjectsParser = new PageObjectsParser(pageObjects);
+export const pageObjectsParser = new PageObjectsParser(pageObjects);
 
 setDefaultTimeout(15000);
 
