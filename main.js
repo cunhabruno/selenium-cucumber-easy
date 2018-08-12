@@ -21,6 +21,6 @@ const runnerParser = new RunnerParser(path.resolve(runnerFilePath));
 
 global.driver = runnerParser.generateSeleniumDriver();
 
-global.pageObjects = runnerParser.getPageObjects();
+export const pageObjectsParser = new PageObjectsParse(runnerParser.getPageObjects());
 
 runnerParser.getCucumberArgs();

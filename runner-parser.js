@@ -71,9 +71,7 @@ export default class RunnerParser {
         argv.push('--require', path.resolve(__dirname, 'features/support/'));
 
 
-        argv.push('--format');
-
-        argv.push('progress');
+        argv.push('--format', 'progress');
 
         const cucumberCli = new Cli({
             argv: argv,

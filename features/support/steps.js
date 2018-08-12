@@ -1,8 +1,7 @@
 import {Given, Then, When, setDefaultTimeout} from 'cucumber';
 import HelperScripts from '../../automation-scripts/helpers';
-import PageObjectsParser from '../../page-objects-parse';
+import {pageObjectsParser} from '../../main';
 import assert from 'assert';
-export const pageObjectsParser = new PageObjectsParser(pageObjects);
 
 setDefaultTimeout(15000);
 
@@ -33,3 +32,6 @@ Given(/^I click on "([^"]*)" (?:button |)on "([^"]*)"$/, async function (childOb
     await HelperScripts.clickOnElement(pageObjectsParser.get2LevelsLocator(parent, childObject));
 });
 
+Then(/^I can see "([^"]*)" on "([^"]*)" with the text "([^"]*)"$/, async function(childObject, parent, expectedText) {
+    await HelperScripts.checkElementText(pageObjectsParser.get2LevelsLocator(parent, childObject), true, expectedText);
+});
