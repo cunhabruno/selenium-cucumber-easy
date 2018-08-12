@@ -53,6 +53,12 @@ export default class RunnerParser {
             'cucumber-js'
         ];
 
+        //Add tags to run if set
+        if(typeof this.runnerFileObj.tags !== 'undefined') {
+            argv.push('--tags', this.runnerFileObj.tags);
+        }
+
+        //Add feature files to run
         this.runnerFileObj.featureFiles.forEach(featurePath => {
             featurePath = path.resolve(featurePath);
             if(fs.existsSync(featurePath)) {
@@ -62,23 +68,38 @@ export default class RunnerParser {
             }
         });
 
+        //Add custom step definitions if set
         await this.runnerFileObj.stepDefinitions.forEach(stepsPath => {
             stepsPath = path.resolve(process.cwd(), stepsPath);
-            console.log(stepsPath);
              argv.push('--require', stepsPath);
         });
 
+        //Add cucumber pre set steps
         argv.push('--require', path.resolve(__dirname, 'features/support/'));
 
+        //Add report format if set
+        if(typeof this.runnerFileObj.format !== 'undefined') {
+            argv.push('--format', this.runnerFileObj.format);
+        } else {
+            argv.push('--format', 'progress');
+        }
 
-        argv.push('--format', 'progress');
+        return argv;
+    }
 
+    async runCucumberTests() {
         const cucumberCli = new Cli({
-            argv: argv,
-            cwd : path.resolve(__dirname, 'node_modules/cucumber/bin/cucumber-js'),
+            argv: await this.getCucumberArgs(),
+            cwd: path.resolve(__dirname, 'node_modules/cucumber/bin/cucumber-js'),
             stdout: process.stdout
         });
+
         console.log(cucumberCli.argv);
-        await cucumberCli.run();
+
+        await cucumberCli.run().then(result => {
+            if(result.success) {
+                driver.close();
+            }
+        });
     }
 }

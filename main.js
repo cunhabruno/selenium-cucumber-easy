@@ -23,4 +23,4 @@ global.driver = runnerParser.generateSeleniumDriver();
 
 export const pageObjectsParser = new PageObjectsParse(runnerParser.getPageObjects());
 
-runnerParser.getCucumberArgs();
+runnerParser.runCucumberTests();
