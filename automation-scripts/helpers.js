@@ -1,4 +1,4 @@
-import {By} from 'selenium-webdriver';
+import {By, Builder} from 'selenium-webdriver';
 import assert from 'assert';
 export default class Helpers {
 
@@ -27,6 +27,13 @@ export default class Helpers {
     static async appendText(elementLocator, textToAdd) {
         await this.waitVisibilityOfElement(elementLocator, 9000);
         await driver.findElement(elementLocator).sendKeys(textToAdd);
+    }
+
+    static async mouseHover(elementLocator) {
+        await this.waitVisibilityOfElement(elementLocator, 9000);
+        const el = await driver.findElement(elementLocator);
+        const actions = driver.actions({bridge: true});
+        await actions.move({origin: el}).perform();
     }
 
         /***********Verifier Functions************** */

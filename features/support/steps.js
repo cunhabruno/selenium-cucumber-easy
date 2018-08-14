@@ -3,7 +3,7 @@ import HelperScripts from '../../automation-scripts/helpers';
 import {pageObjectsParser} from '../../main';
 import assert from 'assert';
 
-setDefaultTimeout(15000);
+setDefaultTimeout(25000);
 
 Given('I go to the following page {string}', async function(string) {
     await driver.get(string);
@@ -30,6 +30,11 @@ Then(/^I can see new tab opened with the title "([^"]*)"$/, async function(tabTi
 
 Given(/^I click on "([^"]*)" (?:button |)on "([^"]*)"$/, async function (childObject, parent) {
     await HelperScripts.clickOnElement(pageObjectsParser.get2LevelsLocator(parent, childObject));
+});
+
+Given(/^I mouse hover on "([^"]*)" (?:button |)on "([^"]*)"$/, async function (childObject, parent) {
+    await HelperScripts.mouseHover(pageObjectsParser.get2LevelsLocator(parent, childObject));
+    await driver.sleep(8000);
 });
 
 Then(/^I can see "([^"]*)" on "([^"]*)" with the text "([^"]*)"$/, async function(childObject, parent, expectedText) {
