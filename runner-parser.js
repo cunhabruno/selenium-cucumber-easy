@@ -5,14 +5,16 @@ import {Cli} from 'cucumber';
 export default class RunnerParser {
     constructor(runnerFilePath) {
         this.runnerFilePath = runnerFilePath;
-        this.runnerFileObj = this.setRunnerFileArgs().default;
+        this.runnerFileObj = this.setRunnerFileArgs();
     }
 
     setRunnerFileArgs() {
         if(fs.existsSync(this.runnerFilePath)) {
             this.runnerFileObj = require(this.runnerFilePath);
 
-            return(this.runnerFileObj);
+            return typeof this.runnerFileObj.default === 'undefined' ?
+                this.runnerFileObj :
+                this.runnerFileObj.default;
         } else {
             throw new Error(this.runnerFilePath + ' is not a valid file');
         }
@@ -32,15 +34,24 @@ export default class RunnerParser {
        this.runnerFileObj.pageObjects.forEach(mapPath => {
            mapPath = path.resolve(mapPath);
            let stats = fs.statSync(mapPath);
+           let obj;
            if(stats.isFile()) {
                if(fs.existsSync(mapPath)) {
-                   pageObjectsObj.push(require(path.resolve(mapPath)).default)
+                   obj = require(path.resolve(mapPath));
+                   if(typeof obj.default !== 'undefined') {
+                       obj = obj.default;
+                   }
+                   pageObjectsObj.push(obj)
                } else {
                    throw new Error(mapPath + ' is not a valid file');
                }
            } else if (stats.isDirectory()) {
                fs.readdirSync(mapPath).forEach(file => {
-                   pageObjectsObj.push(require(path.resolve(mapPath, file)).default)
+                   obj = require(path.resolve(mapPath, file));
+                   if(typeof obj.default !== 'undefined') {
+                       obj = obj.default;
+                   }
+                   pageObjectsObj.push(obj)
                })
            }
        });
