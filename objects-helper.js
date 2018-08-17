@@ -1,4 +1,4 @@
-export default class ObjectsHelper {
+class ObjectsHelper {
     constructor(objectsHash) {
         this.objects = objectsHash;
     }
@@ -8,3 +8,4 @@ export default class ObjectsHelper {
         return this.objects[elementName];
     }
 }
+module.exports = ObjectsHelper;

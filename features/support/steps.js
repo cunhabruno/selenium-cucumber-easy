@@ -1,7 +1,7 @@
-import {Given, Then, When, setDefaultTimeout} from 'cucumber';
-import HelperScripts from '../../automation-scripts/helpers';
-import {pageObjectsParser} from '../../main';
-import assert from 'assert';
+const {Given, Then, When, setDefaultTimeout} = require('cucumber');
+const HelperScripts = require('../../automation-scripts/helpers');
+const {pageObjectsParser} = require('../../main');
+const assert = require('assert');
 
 setDefaultTimeout(25000);
 

@@ -1,8 +1,7 @@
-import Helpers from "./automation-scripts/helpers";
-import './main';
-import {pageObjectsParser} from './main';
-import {Given, Then, When} from 'cucumber';
-import {By} from 'selenium-webdriver';
-import webdriver from 'selenium-webdriver';
+const Helpers = require('./automation-scripts/helpers');
+require('./main');
+const {pageObjectsParser} = require('./main');
+const {Given, Then, When} = require('cucumber');
+const {By} = require ('selenium-webdriver');
 
-export { Helpers, Given, Then, When, pageObjectsParser, By, webdriver}
+export { Helpers, Given, Then, When, pageObjectsParser, By}

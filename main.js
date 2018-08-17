@@ -1,9 +1,9 @@
-import commander from 'commander';
-import path from 'path';
-import RunnerParser from "./runner-parser";
-import PageObjectsParse from "./page-objects-parse";
+const commander = require('commander');
+const path = require('path');
+const RunnerParser = require("./runner-parser");
+const PageObjectsParse = require("./page-objects-parse");
 
-export let runnerFilePath;
+let runnerFilePath;
 commander
     .version('0.0.1')
     .arguments('<runnerFilePath>')
@@ -21,6 +21,6 @@ const runnerParser = new RunnerParser(path.resolve(runnerFilePath));
 
 global.driver = runnerParser.generateSeleniumDriver();
 
-export const pageObjectsParser = new PageObjectsParse(runnerParser.getPageObjects());
+exports.pageObjectsParser = new PageObjectsParse(runnerParser.getPageObjects());
 
 runnerParser.runCucumberTests();

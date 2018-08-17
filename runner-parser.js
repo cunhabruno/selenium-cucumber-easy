@@ -1,8 +1,8 @@
-import path from 'path';
-import fs from 'fs';
-import webdriver from 'selenium-webdriver';
-import {Cli} from 'cucumber';
-export default class RunnerParser {
+const path = require('path');
+const fs = require('fs');
+const webdriver = require('selenium-webdriver');
+const {Cli} = require('cucumber');
+class RunnerParser {
     constructor(runnerFilePath) {
         this.runnerFilePath = runnerFilePath;
         this.runnerFileObj = this.setRunnerFileArgs();
@@ -114,3 +114,4 @@ export default class RunnerParser {
         });
     }
 }
+module.exports = RunnerParser;

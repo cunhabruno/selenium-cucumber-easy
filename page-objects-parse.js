@@ -1,4 +1,4 @@
-export default class PageObjectsParse {
+class PageObjectsParse {
     constructor(pageObjectsObj) {
         this.pageObjectsObj = pageObjectsObj;
     }
@@ -28,3 +28,4 @@ export default class PageObjectsParse {
         return locatorFound;
     }
 }
+module.exports = PageObjectsParse;

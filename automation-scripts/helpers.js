@@ -1,6 +1,6 @@
-import {By, Builder} from 'selenium-webdriver';
-import assert from 'assert';
-export default class Helpers {
+const {By, Builder} = require('selenium-webdriver');
+const assert = require('assert');
+class Helpers {
 
     /***********Action Functions************** */
 
@@ -87,3 +87,5 @@ export default class Helpers {
         }, timeOut, 'The Element with the locator ' + elementLocator.toString() + ' is not clickable');
     }
 }
+
+module.exports = Helpers;
