@@ -23,10 +23,16 @@ class RunnerParser {
     generateSeleniumDriver() {
         if(this.runnerFileObj !== null) {
             let capabilities = {
-              'browserName' : this.runnerFileObj.browserName
+                'browserName' : this.runnerFileObj.browserName
             };
             return new webdriver.Builder().usingServer(this.runnerFileObj.seleniumAddress).withCapabilities(capabilities).build();
         }
+    }
+
+    getDefaultTimeOut() {
+        return typeof this.runnerFileObj.defaultWaitTimeout !== 'undefined'?
+            this.runnerFileObj.defaultWaitTimeout :
+            10000;
     }
 
     getPageObjects() {

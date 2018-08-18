@@ -19,8 +19,11 @@ if(typeof runnerFilePath === 'undefined') {
 
 const runnerParser = new RunnerParser(path.resolve(runnerFilePath));
 
+global.DEFAULT_WAIT_TIME_OUT = runnerParser.getDefaultTimeOut();
 global.driver = runnerParser.generateSeleniumDriver();
 
-exports.pageObjectsParser = new PageObjectsParse(runnerParser.getPageObjects());
+const pageObjectsParser = new PageObjectsParse(runnerParser.getPageObjects());
 
 runnerParser.runCucumberTests();
+
+export { pageObjectsParser };

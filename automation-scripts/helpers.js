@@ -14,23 +14,23 @@ class Helpers {
     }
 
     static async clickOnElement(elementToClick) {
-        await this.waitElementToBeClickable(elementToClick, 9000);
+        await this.waitElementToBeClickable(elementToClick, DEFAULT_WAIT_TIME_OUT);
         await driver.findElement(elementToClick).click();
     }
 
     static async writeText(elementLocator, textToAdd) {
-        await this.waitVisibilityOfElement(elementLocator, 9000);
+        await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
         await driver.findElement(elementLocator).clear();
         await driver.findElement(elementLocator).sendKeys(textToAdd);
     }
 
     static async appendText(elementLocator, textToAdd) {
-        await this.waitVisibilityOfElement(elementLocator, 9000);
+        await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
         await driver.findElement(elementLocator).sendKeys(textToAdd);
     }
 
     static async mouseHover(elementLocator) {
-        await this.waitVisibilityOfElement(elementLocator, 9000);
+        await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
         const el = await driver.findElement(elementLocator);
         const actions = driver.actions({bridge: true});
         await actions.move({origin: el}).perform();
@@ -43,12 +43,22 @@ class Helpers {
     }
 
     static async checkElementText (elementLocator, blnMeets, textToValidate) {
-        await this.waitVisibilityOfElement(elementLocator, 9000);
+        await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
         const textFound = await driver.findElement(elementLocator).getText();
         blnMeets ?
-        assert.equal(textFound, textToValidate, 'Element text should be equals') :
-        assert.notEqual(textFound, textToValidate, 'Element text should NOT be equals');
+            assert.equal(textFound, textToValidate, 'Element text should be equals') :
+            assert.notEqual(textFound, textToValidate, 'Element text should NOT be equals');
         return (textFound === textToValidate) === blnMeets;
+    }
+
+    static async checkElementTextContains (elementLocator, blnMeets, textToValidate) {
+        await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
+        const textFound = await driver.findElement(elementLocator).getText();
+        const containsResult = textFound.includes(textToValidate);
+        blnMeets ?
+            assert(containsResult, 'Element text should contains "' + textToValidate + '"') :
+            assert(!containsResult, 'Element text should NOT contains "' + textToValidate + '"');
+        return containsResult === blnMeets;
     }
 
     static isElementDisplayed(elementLocator) {

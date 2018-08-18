@@ -1,3 +1,4 @@
+'use strict';
 class PageObjectsParse {
     constructor(pageObjectsObj) {
         this.pageObjectsObj = pageObjectsObj;
