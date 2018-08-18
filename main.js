@@ -26,4 +26,4 @@ const pageObjectsParser = new PageObjectsParse(runnerParser.getPageObjects());
 
 runnerParser.runCucumberTests();
 
-export { pageObjectsParser };
+module.exports = { pageObjectsParser };
