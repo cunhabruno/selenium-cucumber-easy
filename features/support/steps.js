@@ -2,12 +2,17 @@ const {Given, Then, When, setDefaultTimeout} = require('cucumber');
 const HelperScripts = require('../../automation-scripts/helpers');
 const {pageObjectsParser} = require('../../main');
 const assert = require('assert');
+const { Key } = require('selenium-webdriver');
 
 setDefaultTimeout(25000);
 
 Given('I go to the following page {string}', async function(string) {
     await driver.get(string);
     await driver.manage().window().maximize();
+});
+
+Given('I press the key {string}', async function(keyToPress) {
+    await driver.actions().sendKeys(Key.ENTER);
 });
 
 /**
