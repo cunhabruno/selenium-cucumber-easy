@@ -1,4 +1,4 @@
-const {By, Builder} = require('selenium-webdriver');
+const {By, Key} = require('selenium-webdriver');
 const assert = require('assert');
 class Helpers {
 
@@ -36,6 +36,15 @@ class Helpers {
         await actions.move({origin: el}).perform();
     }
 
+    static async pressKey(keyToPress) {
+        keyToPress = keyToPress.toUpperCase().replace(/ /g, '');
+        if(typeof Key[keyToPress] !== 'undefined') {
+            await driver.actions({bridge: true}).sendKeys(Key[keyToPress]).perform();
+        } else {
+            throw new Error('Invalid key to press');
+        }
+    }
+
         /***********Verifier Functions************** */
 
     static async checkElementExists (elementLocator, blnExists) {
@@ -43,6 +52,9 @@ class Helpers {
     }
 
     static async checkElementText (elementLocator, blnMeets, textToValidate) {
+        if(typeof elementLocator === 'function') {
+            elementLocator = elementLocator(textToValidate);
+        }
         await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
         const textFound = await driver.findElement(elementLocator).getText();
         blnMeets ?
