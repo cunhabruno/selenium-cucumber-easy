@@ -19,6 +19,11 @@ class Helpers {
         await driver.findElement(elementToClick).click();
     }
 
+    static async clearInputElement(elementToClick) {
+        await this.waitVisibilityOfElement(elementToClick, DEFAULT_WAIT_TIME_OUT);
+        await driver.findElement(elementToClick).clear();
+    }
+
     static async writeText(elementLocator, textToAdd) {
         await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
         await driver.findElement(elementLocator).clear();
@@ -56,8 +61,20 @@ class Helpers {
 
     static async checkElementSelected(elementLocator, blnSelected) {
         await this.waitPresenceOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
-        return blnSelected ===
-           await driver.findElement(elementLocator).isSelected();
+        const selectedResult = await driver.findElement(elementLocator).isSelected();
+        blnSelected ?
+            assert.equal(blnSelected, selectedResult, 'Element text should be Selected') :
+            assert.equal(blnSelected, selectedResult, 'Element text should be Unselected');
+        return blnSelected === selectedResult;
+    }
+
+    static async checkElementEnabled(elementLocator, blnEnabled) {
+        await this.waitPresenceOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
+        const enabledResult = await driver.findElement(elementLocator).isEnabled();
+        blnEnabled ?
+            assert.equal(blnEnabled, enabledResult, 'Element text should be Enabled') :
+            assert.equal(blnEnabled, enabledResult, 'Element text should be Disabled');
+        return blnEnabled === enabledResult;
     }
 
     static async checkElementText(elementLocator, blnMeets, textToValidate) {

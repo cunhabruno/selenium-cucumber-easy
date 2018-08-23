@@ -40,7 +40,5 @@
   "bin": {
     "selenium-easy": "bin/selenium-easy"
   },
-  "devDependencies": {
-
-  }
+  "devDependencies": {}
 }

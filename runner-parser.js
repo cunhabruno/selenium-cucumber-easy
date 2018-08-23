@@ -35,6 +35,12 @@ class RunnerParser {
             10000;
     }
 
+    getBaseAppUrl() {
+        return typeof this.runnerFileObj.baseAppUrl !== 'undefined'?
+            this.runnerFileObj.baseAppUrl :
+            null;
+    }
+
     getPageObjects() {
        let pageObjectsObj = [];
        this.runnerFileObj.pageObjects.forEach(mapPath => {
@@ -113,6 +119,11 @@ class RunnerParser {
 
         console.log(cucumberCli.argv);
 
+        const baseUrl = this.getBaseAppUrl();
+        if(baseUrl !== null) {
+            await driver.get(baseUrl);
+            await driver.manage().window().maximize();
+        }
         await cucumberCli.run().then(result => {
             if(result.success) {
                 driver.close();

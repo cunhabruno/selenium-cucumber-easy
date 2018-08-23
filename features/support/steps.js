@@ -45,7 +45,32 @@ Then(/^I can see "([^"]*)" unselected on "([^"]*)" with the text "([^"]*)"$/, as
 Then(/^I can see "([^"]*)" (?:label |)unselected with the text "([^"]*)" on "([^"]*)"$/, async function(childObject, elementText, parent) {
     await HelperScripts.checkElementSelected(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), false);
 });
+//Check if element is enabled or disabled
+Then(/^I can see "([^"]*)" enabled on "([^"]*)" with the text "([^"]*)"$/, async function(childObject, parent, elementText) {
+    await HelperScripts.checkElementEnabled(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), true);
+});
 
+Then(/^I can see "([^"]*)" (?:button |)enabled with the text "([^"]*)" on "([^"]*)"$/, async function(childObject, elementText, parent) {
+    await HelperScripts.checkElementEnabled(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), true);
+});
+
+Then(/^I can see "([^"]*)" disabled on "([^"]*)" with the text "([^"]*)"$/, async function(childObject, parent, elementText) {
+    await HelperScripts.checkElementEnabled(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), false);
+});
+
+Then(/^I can see "([^"]*)" (?:button |)disabled with the text "([^"]*)" on "([^"]*)"$/, async function(childObject, elementText, parent) {
+    await HelperScripts.checkElementEnabled(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), false);
+});
+
+Then(/^I can see "([^"]*)" enabled on "([^"]*)"$/, async function(childObject, parent) {
+    await HelperScripts.checkElementEnabled(pageObjectsParser.get2LevelsLocator(parent, childObject), true);
+});
+
+Then(/^I can see "([^"]*)" disabled on "([^"]*)"$/, async function(childObject, parent) {
+    await HelperScripts.checkElementEnabled(pageObjectsParser.get2LevelsLocator(parent, childObject), false);
+});
+
+//Check if element is displayed
 Then(/^I can see "([^"]*)"(?: displayed$|)$/, async function(elementName) {
     await HelperScripts.waitVisibilityOfElement(pageObjectsParser.get1LevelLocator(elementName), 9000);
 });
@@ -84,6 +109,10 @@ Then(/^I fill in "([^"]*)" (?:input |field |)on "([^"]*)" with the value "([^"]*
 
 Then(/^I append text in "([^"]*)" (?:input |field |)on "([^"]*)" with the value "([^"]*)"$/, async function(childObject, parent, textToAdd) {
     await HelperScripts.appendText(pageObjectsParser.get2LevelsLocator(parent, childObject), textToAdd);
+});
+
+Given(/^I clear "([^"]*)" (?:input |)on "([^"]*)"$/, async function (childObject, parent) {
+    await HelperScripts.clearInputElement(pageObjectsParser.get2LevelsLocator(parent, childObject));
 });
 
 /*****
