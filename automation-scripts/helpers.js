@@ -1,10 +1,11 @@
 const {By, Key} = require('selenium-webdriver');
 const assert = require('assert');
+
 class Helpers {
 
     /***********Action Functions************** */
 
-    static async selectValueOnDropDown (dropDownLocator, valueToSelect) {
+    static async selectValueOnDropDown(dropDownLocator, valueToSelect) {
         valueToSelect = typeof valueToSelect === 'string' ?
             By.xpath('//*[.="' + valueToSelect + '"]') :
             valueToSelect;
@@ -38,21 +39,29 @@ class Helpers {
 
     static async pressKey(keyToPress) {
         keyToPress = keyToPress.toUpperCase().replace(/ /g, '');
-        if(typeof Key[keyToPress] !== 'undefined') {
+        if (typeof Key[keyToPress] !== 'undefined') {
             await driver.actions({bridge: true}).sendKeys(Key[keyToPress]).perform();
         } else {
             throw new Error('Invalid key to press');
         }
     }
 
-        /***********Verifier Functions************** */
+    /***********Verifier Functions************** */
 
-    static async checkElementExists (elementLocator, blnExists) {
-        return await driver.findElement(elementLocator).isDisplayed();
+    static async checkElementDisplayed(elementLocator, blnExists) {
+        return blnExists ?
+            await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT) :
+            await this.waitInvisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
     }
 
-    static async checkElementText (elementLocator, blnMeets, textToValidate) {
-        if(typeof elementLocator === 'function') {
+    static async checkElementSelected(elementLocator, blnSelected) {
+        await this.waitPresenceOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
+        return blnSelected ===
+           await driver.findElement(elementLocator).isSelected();
+    }
+
+    static async checkElementText(elementLocator, blnMeets, textToValidate) {
+        if (typeof elementLocator === 'function') {
             elementLocator = elementLocator(textToValidate);
         }
         await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
@@ -63,7 +72,7 @@ class Helpers {
         return (textFound === textToValidate) === blnMeets;
     }
 
-    static async checkElementTextContains (elementLocator, blnMeets, textToValidate) {
+    static async checkElementTextContains(elementLocator, blnMeets, textToValidate) {
         await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
         const textFound = await driver.findElement(elementLocator).getText();
         const containsResult = textFound.includes(textToValidate);
@@ -73,10 +82,18 @@ class Helpers {
         return containsResult === blnMeets;
     }
 
+    static isElementPresent(elementLocator) {
+        return driver.findElements(elementLocator).then(elms => {
+            return elms.length > 0;
+        }, (err) => {
+            return false;
+        });
+    }
+
     static isElementDisplayed(elementLocator) {
         return driver.findElements(elementLocator).then(elms => {
-            if(elms.length > 0) {
-                return elms[0].isDisplayed().then(displayed => displayed);
+            if (elms.length > 0) {
+                return driver.findElement(elementLocator).isDisplayed().then(displayed => displayed);
             } else {
                 return false;
             }
@@ -87,7 +104,7 @@ class Helpers {
 
     static isElementEnabled(elementLocator) {
         return this.isElementDisplayed(elementLocator).then((displayed) => {
-            if(displayed) {
+            if (displayed) {
                 return driver.findElement(elementLocator).isEnabled().then(enabled => enabled);
             }
 
@@ -95,12 +112,24 @@ class Helpers {
         });
     }
 
-        /***********Wait Functions************** */
+    /***********Wait Functions************** */
+
+    static async waitPresenceOfElement(elementLocator, timeOut) {
+        return driver.wait(async() => {
+            return await this.isElementPresent(elementLocator)
+        }, timeOut, 'The Element with the locator ' + elementLocator.toString() + ' is not present');
+    }
 
     static async waitVisibilityOfElement(elementLocator, timeOut) {
-        return driver.wait(() => {
-            return this.isElementDisplayed(elementLocator)
+        return driver.wait(async() => {
+            return await this.isElementDisplayed(elementLocator)
         }, timeOut, 'The Element with the locator ' + elementLocator.toString() + ' is not visible');
+    }
+
+    static async waitInvisibilityOfElement(elementLocator, timeOut) {
+        return driver.wait(async () => {
+            return !await this.isElementDisplayed(elementLocator)
+        }, timeOut, 'The Element with the locator ' + elementLocator.toString() + ' is visible');
     }
 
     static async waitElementToBeClickable(elementLocator, timeOut) {
@@ -108,6 +137,7 @@ class Helpers {
             return this.isElementEnabled(elementLocator)
         }, timeOut, 'The Element with the locator ' + elementLocator.toString() + ' is not clickable');
     }
+
 }
 
 module.exports = Helpers;

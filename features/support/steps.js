@@ -19,7 +19,31 @@ Given('I press the key {string}', async function(keyToPress) {
  */
 
 Then(/^I can see "([^"]*)" on "([^"]*)"$/, async function(childObject, parent) {
-    await HelperScripts.checkElementExists(pageObjectsParser.get2LevelsLocator(parent, childObject));
+    await HelperScripts.checkElementDisplayed(pageObjectsParser.get2LevelsLocator(parent, childObject), true);
+});
+
+Then(/^I can NOT see "([^"]*)" displayed on "([^"]*)" with the text "([^"]*)"$/, async function(childObject, parent, elementText) {
+    await HelperScripts.checkElementDisplayed(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), false);
+});
+
+Then(/^I can NOT see "([^"]*)" (?:label |)displayed with the text "([^"]*)" on "([^"]*)"$/, async function(childObject, elementText, parent) {
+    await HelperScripts.checkElementDisplayed(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), false);
+});
+
+Then(/^I can see "([^"]*)" selected on "([^"]*)" with the text "([^"]*)"$/, async function(childObject, parent, elementText) {
+    await HelperScripts.checkElementSelected(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), true);
+});
+
+Then(/^I can see "([^"]*)" (?:label |)selected with the text "([^"]*)" on "([^"]*)"$/, async function(childObject, elementText, parent) {
+    await HelperScripts.checkElementSelected(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), true);
+});
+
+Then(/^I can see "([^"]*)" unselected on "([^"]*)" with the text "([^"]*)"$/, async function(childObject, parent, elementText) {
+    await HelperScripts.checkElementSelected(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), false);
+});
+
+Then(/^I can see "([^"]*)" (?:label |)unselected with the text "([^"]*)" on "([^"]*)"$/, async function(childObject, elementText, parent) {
+    await HelperScripts.checkElementSelected(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), false);
 });
 
 Then(/^I can see "([^"]*)"(?: displayed$|)$/, async function(elementName) {
@@ -39,6 +63,10 @@ Then(/^I can see new tab opened with the title "([^"]*)"$/, async function(tabTi
 
 Given(/^I click on "([^"]*)" (?:button |)on "([^"]*)"$/, async function (childObject, parent) {
     await HelperScripts.clickOnElement(pageObjectsParser.get2LevelsLocator(parent, childObject));
+});
+
+Given(/^I click on "([^"]*)" (?:button |)on "([^"]*)" with the text "([^"]*)"$/, async function (childObject, parent, textParameter) {
+    await HelperScripts.clickOnElement(pageObjectsParser.get2LevelsLocator(parent, childObject)(textParameter));
 });
 
 Given(/^I mouse hover on "([^"]*)" (?:button |)on "([^"]*)"$/, async function (childObject, parent) {
