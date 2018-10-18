@@ -3,7 +3,7 @@ const HelperScripts = require('../../automation-scripts/helpers');
 const {pageObjectsParser} = require('../../main');
 const assert = require('assert');
 
-setDefaultTimeout(25000);
+setDefaultTimeout(200000);
 
 Given('I go to the following page {string}', async function(string) {
     await driver.get(string);
@@ -18,8 +18,12 @@ Given('I press the key {string}', async function(keyToPress) {
  * Steps to validate elements state
  */
 
-Then(/^I can see "([^"]*)" on "([^"]*)"$/, async function(childObject, parent) {
+Then(/^I can see "([^"]*)" on "([^"]*)"(?: displayed|)$/, async function(childObject, parent) {
     await HelperScripts.checkElementDisplayed(pageObjectsParser.get2LevelsLocator(parent, childObject), true);
+});
+
+Then(/^I can NOT see "([^"]*)" on "([^"]*)"(?: displayed|)$/, async function(childObject, parent) {
+    await HelperScripts.checkElementDisplayed(pageObjectsParser.get2LevelsLocator(parent, childObject), false);
 });
 
 Then(/^I can NOT see "([^"]*)" displayed on "([^"]*)" with the text "([^"]*)"$/, async function(childObject, parent, elementText) {
@@ -27,6 +31,14 @@ Then(/^I can NOT see "([^"]*)" displayed on "([^"]*)" with the text "([^"]*)"$/,
 });
 
 Then(/^I can NOT see "([^"]*)" (?:label |)displayed with the text "([^"]*)" on "([^"]*)"$/, async function(childObject, elementText, parent) {
+    await HelperScripts.checkElementDisplayed(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), false);
+});
+
+Then(/^I can see "([^"]*)" (?:label |)that has the text "([^"]*)" displayed on "([^"]*)"$/, async function(childObject, elementText, parent) {
+    await HelperScripts.checkElementDisplayed(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), true);
+});
+
+Then(/^I can NOT see "([^"]*)" (?:label |)that has the text "([^"]*)" displayed on "([^"]*)"$/, async function(childObject, elementText, parent) {
     await HelperScripts.checkElementDisplayed(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), false);
 });
 
@@ -72,7 +84,7 @@ Then(/^I can see "([^"]*)" disabled on "([^"]*)"$/, async function(childObject, 
 
 //Check if element is displayed
 Then(/^I can see "([^"]*)"(?: displayed$|)$/, async function(elementName) {
-    await HelperScripts.waitVisibilityOfElement(pageObjectsParser.get1LevelLocator(elementName), 9000);
+    await HelperScripts.waitVisibilityOfElement(pageObjectsParser.get1LevelLocator(elementName), DEFAULT_WAIT_TIME_OUT);
 });
 
 Then(/^I can see new tab opened with the title "([^"]*)"$/, async function(tabTitle) {
@@ -86,17 +98,25 @@ Then(/^I can see new tab opened with the title "([^"]*)"$/, async function(tabTi
  * Steps to Make actions on elements
  */
 
-Given(/^I click on "([^"]*)" (?:button |)on "([^"]*)"$/, async function (childObject, parent) {
+Given(/^I click on "([^"]*)"(?:button|link|)$/, async function (elementName) {
+    await HelperScripts.clickOnElement(pageObjectsParser.get1LevelLocator(elementName));
+});
+
+Given(/^I click on "([^"]*)" (?:button |link |)on "([^"]*)"$/, async function (childObject, parent) {
     await HelperScripts.clickOnElement(pageObjectsParser.get2LevelsLocator(parent, childObject));
 });
 
-Given(/^I click on "([^"]*)" (?:button |)on "([^"]*)" with the text "([^"]*)"$/, async function (childObject, parent, textParameter) {
+Given(/^I click on "([^"]*)" (?:button |link |)on "([^"]*)" with the text "([^"]*)"$/, async function (childObject, parent, textParameter) {
+    await HelperScripts.clickOnElement(pageObjectsParser.get2LevelsLocator(parent, childObject)(textParameter));
+});
+
+Given(/^I click on "([^"]*)" (?:button |link |)that has the text "([^"]*)" on "([^"]*)"$/, async function (childObject, textParameter, parent) {
     await HelperScripts.clickOnElement(pageObjectsParser.get2LevelsLocator(parent, childObject)(textParameter));
 });
 
 Given(/^I mouse hover on "([^"]*)" (?:button |)on "([^"]*)"$/, async function (childObject, parent) {
     await HelperScripts.mouseHover(pageObjectsParser.get2LevelsLocator(parent, childObject));
-    await driver.sleep(8000);
+    await driver.sleep(2000);
 });
 
 When(/^I select the value "([^"]*)" on "([^"]*)" dropdown on "([^"]*)"$/, async function(value, dropDownName, pageName) {
@@ -116,7 +136,7 @@ Given(/^I clear "([^"]*)" (?:input |)on "([^"]*)"$/, async function (childObject
 });
 
 /*****
- * Steps to verify elements texts
+ * Steps to verify elements text
  */
 
 Then(/^I can see "([^"]*)" on "([^"]*)" with the text "([^"]*)"$/, async function(childObject, parent, expectedText) {
@@ -127,7 +147,7 @@ Then(/^I can see "([^"]*)" (?:label |)with the text "([^"]*)" on "([^"]*)"$/, as
     await HelperScripts.checkElementText(pageObjectsParser.get2LevelsLocator(parent, childObject), true, expectedText);
 });
 
-Then(/^I can see "([^"]*)" on "([^"]*)"containing the text "([^"]*)"$/, async function(childObject, parent, expectedText) {
+Then(/^I can see "([^"]*)" on "([^"]*)" containing the text "([^"]*)"$/, async function(childObject, parent, expectedText) {
     await HelperScripts.checkElementTextContains(pageObjectsParser.get2LevelsLocator(parent, childObject), true, expectedText);
 });
 

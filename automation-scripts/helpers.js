@@ -93,9 +93,10 @@ class Helpers {
         await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
         const textFound = await driver.findElement(elementLocator).getText();
         const containsResult = textFound.includes(textToValidate);
+        const textFoundMsg = 'Text found was: ' + textFound;
         blnMeets ?
-            assert(containsResult, 'Element text should contains "' + textToValidate + '"') :
-            assert(!containsResult, 'Element text should NOT contains "' + textToValidate + '"');
+            assert(containsResult, 'Element text should contains "' + textToValidate + '" ' + textFoundMsg) :
+            assert(!containsResult, 'Element text should NOT contains "' + textToValidate + '" ' + textFoundMsg);
         return containsResult === blnMeets;
     }
 
