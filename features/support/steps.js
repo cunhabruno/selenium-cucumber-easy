@@ -42,6 +42,14 @@ Then(/^I can NOT see "([^"]*)" (?:label |)that has the text "([^"]*)" displayed 
     await HelperScripts.checkElementDisplayed(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), false);
 });
 
+Then(/^I can see "([^"]*)" (?:label |)that has the text "([^"]*)" present on "([^"]*)"$/, async function(childObject, elementText, parent) {
+    await HelperScripts.checkElementPresent(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), true);
+});
+
+Then(/^I can NOT see "([^"]*)" (?:label |)that has the text "([^"]*)" present on "([^"]*)"$/, async function(childObject, elementText, parent) {
+    await HelperScripts.checkElementPresent(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), false);
+});
+
 Then(/^I can see "([^"]*)" selected on "([^"]*)" with the text "([^"]*)"$/, async function(childObject, parent, elementText) {
     await HelperScripts.checkElementSelected(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), true);
 });

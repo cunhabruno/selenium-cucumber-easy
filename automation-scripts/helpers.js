@@ -53,6 +53,12 @@ class Helpers {
 
     /***********Verifier Functions************** */
 
+    static async checkElementPresent(elementLocator, blnExists) {
+        return blnExists ?
+            await this.waitPresenceOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT) :
+            await this.waitPresenceOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
+    }
+
     static async checkElementDisplayed(elementLocator, blnExists) {
         return blnExists ?
             await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT) :
