@@ -5,38 +5,50 @@ class Helpers {
 
     /***********Action Functions************** */
 
-    static async selectValueOnDropDown(dropDownLocator, valueToSelect) {
+    static async selectValueOnDropDown(dropDownLocator, valueToSelect, timeOut) {
+        timeOut = typeof timeOut === 'undefined' ? DEFAULT_WAIT_TIME_OUT : timeOut;
         valueToSelect = typeof valueToSelect === 'string' ?
             By.xpath('//*[.="' + valueToSelect + '"]') :
             valueToSelect;
-
+        await this.waitVisibilityOfElement(valueToSelect, timeOut);
         await driver.findElement(dropDownLocator).click();
         return await driver.findElement(valueToSelect).click();
     }
 
-    static async clickOnElement(elementToClick) {
-        await this.waitElementToBeClickable(elementToClick, DEFAULT_WAIT_TIME_OUT);
-        await driver.findElement(elementToClick).click();
+    static async clickOnElement(elementLocator, timeOut) {
+        timeOut = typeof timeOut === 'undefined' ? DEFAULT_WAIT_TIME_OUT : timeOut;
+        await this.waitElementToBeClickable(elementLocator, timeOut);
+        await driver.findElement(elementLocator).click();
     }
 
-    static async clearInputElement(elementToClick) {
-        await this.waitVisibilityOfElement(elementToClick, DEFAULT_WAIT_TIME_OUT);
-        await driver.findElement(elementToClick).clear();
+    static async doubleClickOnElement(elementLocator, timeOut) {
+        timeOut = typeof timeOut === 'undefined' ? DEFAULT_WAIT_TIME_OUT : timeOut;
+        await this.waitElementToBeClickable(elementLocator, timeOut);
+        await driver.findElement(elementLocator).doubleClick();
     }
 
-    static async writeText(elementLocator, textToAdd) {
-        await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
+    static async clearInputElement(elementLocator, timeOut) {
+        timeOut = typeof timeOut === 'undefined' ? DEFAULT_WAIT_TIME_OUT : timeOut;
+        await this.waitVisibilityOfElement(elementLocator, timeOut);
+        await driver.findElement(elementLocator).clear();
+    }
+
+    static async writeText(elementLocator, textToAdd, timeOut) {
+        timeOut = typeof timeOut === 'undefined' ? DEFAULT_WAIT_TIME_OUT : timeOut;
+        await this.waitVisibilityOfElement(elementLocator, timeOut);
         await driver.findElement(elementLocator).clear();
         await driver.findElement(elementLocator).sendKeys(textToAdd);
     }
 
-    static async appendText(elementLocator, textToAdd) {
-        await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
+    static async appendText(elementLocator, textToAdd, timeOut) {
+        timeOut = typeof timeOut === 'undefined' ? DEFAULT_WAIT_TIME_OUT : timeOut;
+        await this.waitVisibilityOfElement(elementLocator, timeOut);
         await driver.findElement(elementLocator).sendKeys(textToAdd);
     }
 
-    static async mouseHover(elementLocator) {
-        await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
+    static async mouseHover(elementLocator, timeOut) {
+        timeOut = typeof timeOut === 'undefined' ? DEFAULT_WAIT_TIME_OUT : timeOut;
+        await this.waitVisibilityOfElement(elementLocator, timeOut);
         const el = await driver.findElement(elementLocator);
         const actions = driver.actions({bridge: true});
         await actions.move({origin: el}).perform();
@@ -53,20 +65,23 @@ class Helpers {
 
     /***********Verifier Functions************** */
 
-    static async checkElementPresent(elementLocator, blnExists) {
+    static async checkElementPresent(elementLocator, blnExists, timeOut) {
+        timeOut = typeof timeOut === 'undefined' ? DEFAULT_WAIT_TIME_OUT : timeOut;
         return blnExists ?
-            await this.waitPresenceOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT) :
-            await this.waitPresenceOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
+            await this.waitPresenceOfElement(elementLocator, timeOut) :
+            await this.waitPresenceOfElement(elementLocator, timeOut);
     }
 
-    static async checkElementDisplayed(elementLocator, blnExists) {
+    static async checkElementDisplayed(elementLocator, blnExists, timeOut) {
+        timeOut = typeof timeOut === 'undefined' ? DEFAULT_WAIT_TIME_OUT : timeOut;
         return blnExists ?
-            await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT) :
-            await this.waitInvisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
+            await this.waitVisibilityOfElement(elementLocator, timeOut) :
+            await this.waitInvisibilityOfElement(elementLocator, timeOut);
     }
 
-    static async checkElementSelected(elementLocator, blnSelected) {
-        await this.waitPresenceOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
+    static async checkElementSelected(elementLocator, blnSelected, timeOut) {
+        timeOut = typeof timeOut === 'undefined' ? DEFAULT_WAIT_TIME_OUT : timeOut;
+        await this.waitPresenceOfElement(elementLocator, timeOut);
         const selectedResult = await driver.findElement(elementLocator).isSelected();
         blnSelected ?
             assert.equal(blnSelected, selectedResult, 'Element text should be Selected') :
@@ -74,8 +89,9 @@ class Helpers {
         return blnSelected === selectedResult;
     }
 
-    static async checkElementEnabled(elementLocator, blnEnabled) {
-        await this.waitPresenceOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
+    static async checkElementEnabled(elementLocator, blnEnabled, timeOut) {
+        timeOut = typeof timeOut === 'undefined' ? DEFAULT_WAIT_TIME_OUT : timeOut;
+        await this.waitPresenceOfElement(elementLocator, timeOut);
         const enabledResult = await driver.findElement(elementLocator).isEnabled();
         blnEnabled ?
             assert.equal(blnEnabled, enabledResult, 'Element text should be Enabled') :
@@ -83,11 +99,12 @@ class Helpers {
         return blnEnabled === enabledResult;
     }
 
-    static async checkElementText(elementLocator, blnMeets, textToValidate) {
+    static async checkElementText(elementLocator, blnMeets, textToValidate, timeOut) {
+        timeOut = typeof timeOut === 'undefined' ? DEFAULT_WAIT_TIME_OUT : timeOut;
         if (typeof elementLocator === 'function') {
             elementLocator = elementLocator(textToValidate);
         }
-        await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
+        await this.waitVisibilityOfElement(elementLocator, timeOut);
         const textFound = await driver.findElement(elementLocator).getText();
         blnMeets ?
             assert.equal(textFound, textToValidate, 'Element text should be equals') :
@@ -95,8 +112,9 @@ class Helpers {
         return (textFound === textToValidate) === blnMeets;
     }
 
-    static async checkElementTextContains(elementLocator, blnMeets, textToValidate) {
-        await this.waitVisibilityOfElement(elementLocator, DEFAULT_WAIT_TIME_OUT);
+    static async checkElementTextContains(elementLocator, blnMeets, textToValidate, timeOut) {
+        timeOut = typeof timeOut === 'undefined' ? DEFAULT_WAIT_TIME_OUT : timeOut;
+        await this.waitVisibilityOfElement(elementLocator, timeOut);
         const textFound = await driver.findElement(elementLocator).getText();
         const containsResult = textFound.includes(textToValidate);
         const textFoundMsg = 'Text found was: ' + textFound;

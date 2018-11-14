@@ -23,7 +23,7 @@ class RunnerParser {
     generateSeleniumDriver() {
         if(this.runnerFileObj !== null) {
             let capabilities = {
-                'browserName' : this.runnerFileObj.browserName
+                'browserName' : this.getBrowser()
             };
             return new webdriver.Builder().usingServer(this.runnerFileObj.seleniumAddress).withCapabilities(capabilities).build();
         }
@@ -39,6 +39,12 @@ class RunnerParser {
         return typeof this.runnerFileObj.baseAppUrl !== 'undefined'?
             this.runnerFileObj.baseAppUrl :
             null;
+    }
+
+    getBrowser() {
+        return typeof this.runnerFileObj.browserName !== 'undefined'?
+            this.runnerFileObj.browserName :
+            'chrome';
     }
 
     getPageObjects() {
