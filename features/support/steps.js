@@ -94,11 +94,11 @@ Then(/^I can see "([^"]*)" (?:button |)disabled that has the text "([^"]*)" on "
     await HelperScripts.checkElementEnabled(pageObjectsParser.get2LevelsLocator(parent, childObject)(elementText), false);
 });
 
-Then(/^I can see "([^"]*)" enabled on "([^"]*)"$/, async function(childObject, parent) {
+Then(/^I can see "([^"]*)" (?:button |)enabled on "([^"]*)"$/, async function(childObject, parent) {
     await HelperScripts.checkElementEnabled(pageObjectsParser.get2LevelsLocator(parent, childObject), true);
 });
 
-Then(/^I can see "([^"]*)" disabled on "([^"]*)"$/, async function(childObject, parent) {
+Then(/^I can see "([^"]*)" (?:button |)disabled on "([^"]*)"$/, async function(childObject, parent) {
     await HelperScripts.checkElementEnabled(pageObjectsParser.get2LevelsLocator(parent, childObject), false);
 });
 
@@ -162,7 +162,7 @@ Given(/^I clear "([^"]*)" (?:input |)on "([^"]*)"$/, async function (childObject
  * Steps to verify elements text
  */
 
-Then(/^I can see "([^"]*)" on "([^"]*)" with the text "([^"]*)"$/, async function(childObject, parent, expectedText) {
+Then(/^I can see "([^"]*)" (?:label |)on "([^"]*)" with the text "([^"]*)"$/, async function(childObject, parent, expectedText) {
     await HelperScripts.checkElementText(pageObjectsParser.get2LevelsLocator(parent, childObject), true, expectedText);
 });
 

@@ -6,7 +6,7 @@ class PageObjectsParse {
 
     get1LevelLocator(locator) {
         locator = locator.toUpperCase().replace(/ /g, '');
-        let locatorFound = null;
+        let locatorFound;
         this.pageObjectsObj.forEach(mapperObj => {
             if(typeof mapperObj[locator] !== 'undefined'){
                 locatorFound = mapperObj[locator];
@@ -18,7 +18,7 @@ class PageObjectsParse {
     get2LevelsLocator(parent, child1) {
         parent = parent.toUpperCase().replace(/ /g, '');
         child1 = child1.toUpperCase().replace(/ /g, '');
-        let locatorFound = null;
+        let locatorFound;
         this.pageObjectsObj.forEach(mapperObj => {
             if(typeof mapperObj[parent] !== 'undefined'){
                 if(typeof mapperObj[parent][child1] !== 'undefined') {

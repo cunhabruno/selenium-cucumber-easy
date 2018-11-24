@@ -23,7 +23,9 @@ class RunnerParser {
     generateSeleniumDriver() {
         if(this.runnerFileObj !== null) {
             let capabilities = {
-                'browserName' : this.getBrowser()
+                'browserName' : this.getBrowser(),
+                'acceptSslCerts': true,
+                'acceptInsecureCerts': true
             };
             return new webdriver.Builder().usingServer(this.runnerFileObj.seleniumAddress).withCapabilities(capabilities).build();
         }
@@ -45,6 +47,12 @@ class RunnerParser {
         return typeof this.runnerFileObj.browserName !== 'undefined'?
             this.runnerFileObj.browserName :
             'chrome';
+    }
+
+    async executeBeforeStart() {
+        return typeof this.runnerFileObj.beforeStart === 'function'?
+            await this.runnerFileObj.beforeStart() :
+            null;
     }
 
     getPageObjects() {
@@ -130,6 +138,7 @@ class RunnerParser {
             await driver.get(baseUrl);
             await driver.manage().window().maximize();
         }
+        await this.executeBeforeStart();
         await cucumberCli.run().then(result => {
             if(result.success) {
                 driver.close();

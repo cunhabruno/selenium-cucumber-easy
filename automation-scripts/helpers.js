@@ -91,7 +91,7 @@ class Helpers {
 
     static async checkElementEnabled(elementLocator, blnEnabled, timeOut) {
         timeOut = typeof timeOut === 'undefined' ? DEFAULT_WAIT_TIME_OUT : timeOut;
-        await this.waitPresenceOfElement(elementLocator, timeOut);
+        await this.waitElementToBeEnabledOrDisabled(elementLocator, blnEnabled, timeOut);
         const enabledResult = await driver.findElement(elementLocator).isEnabled();
         blnEnabled ?
             assert.equal(blnEnabled, enabledResult, 'Element text should be Enabled') :
@@ -175,8 +175,14 @@ class Helpers {
     }
 
     static async waitElementToBeClickable(elementLocator, timeOut) {
-        return driver.wait(() => {
-            return this.isElementEnabled(elementLocator)
+        return driver.wait(async () => {
+            return await this.isElementEnabled(elementLocator)
+        }, timeOut, 'The Element with the locator ' + elementLocator.toString() + ' is not clickable');
+    }
+
+    static async waitElementToBeEnabledOrDisabled(elementLocator, blnEnabled, timeOut) {
+        return driver.wait(async () => {
+            return (await this.isElementEnabled(elementLocator) === blnEnabled)
         }, timeOut, 'The Element with the locator ' + elementLocator.toString() + ' is not clickable');
     }
 
