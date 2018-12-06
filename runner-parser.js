@@ -49,6 +49,10 @@ class RunnerParser {
             'chrome';
     }
 
+    getParams() {
+        return this.runnerFileObj.params;
+    }
+
     async executeBeforeStart() {
         return typeof this.runnerFileObj.beforeStart === 'function'?
             await this.runnerFileObj.beforeStart() :

@@ -131,7 +131,7 @@ class Helpers {
             elementLocator = elementLocator(textToValidate);
         }
         await this.waitVisibilityOfElement(elementLocator, timeOut);
-        const textFound = await driver.findElement(elementLocator).getText().toUpperCase().replace(/ /g, '');;
+        const textFound = await driver.findElement(elementLocator).getText().toUpperCase().replace(/ /g, '');
         blnMeets ?
             assert.equal(textFound, textToValidate, 'Element text should be equals') :
             assert.notEqual(textFound, textToValidate, 'Element text should NOT be equals');

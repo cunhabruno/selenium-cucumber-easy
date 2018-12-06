@@ -21,6 +21,7 @@ const runnerParser = new RunnerParser(path.resolve(runnerFilePath));
 
 global.DEFAULT_WAIT_TIME_OUT = runnerParser.getDefaultTimeOut();
 global.driver = runnerParser.generateSeleniumDriver();
+global.params = runnerParser.getParams();
 
 const pageObjectsParser = new PageObjectsParse(runnerParser.getPageObjects());
 
