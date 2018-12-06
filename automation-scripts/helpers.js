@@ -124,6 +124,20 @@ class Helpers {
         return containsResult === blnMeets;
     }
 
+    static async checkElementTextIgnoreSpaceCase(elementLocator, blnMeets, textToValidate, timeOut) {
+        timeOut = typeof timeOut === 'undefined' ? DEFAULT_WAIT_TIME_OUT : timeOut;
+        textToValidate = textToValidate.toUpperCase().replace(/ /g, '');
+        if (typeof elementLocator === 'function') {
+            elementLocator = elementLocator(textToValidate);
+        }
+        await this.waitVisibilityOfElement(elementLocator, timeOut);
+        const textFound = await driver.findElement(elementLocator).getText().toUpperCase().replace(/ /g, '');;
+        blnMeets ?
+            assert.equal(textFound, textToValidate, 'Element text should be equals') :
+            assert.notEqual(textFound, textToValidate, 'Element text should NOT be equals');
+        return (textFound === textToValidate) === blnMeets;
+    }
+
     static isElementPresent(elementLocator) {
         return driver.findElements(elementLocator).then(elms => {
             return elms.length > 0;
