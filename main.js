@@ -1,7 +1,7 @@
 const commander = require('commander');
 const path = require('path');
-const RunnerParser = require("./runner-parser");
-const PageObjectsParse = require("./page-objects-parse");
+const RunnerParser = require('./runner-parser');
+const PageObjectsParse = require('./page-objects-parse');
 
 let runnerFilePath;
 commander
