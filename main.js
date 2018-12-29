@@ -2,10 +2,11 @@ const commander = require('commander');
 const path = require('path');
 const RunnerParser = require('./runner-parser');
 const PageObjectsParse = require('./page-objects-parse');
+const { version } = require('./package');
 
 let runnerFilePath;
 commander
-    .version('0.0.1')
+    .version(version)
     .arguments('<runnerFilePath>')
     .action((filePath) => {
         runnerFilePath = filePath;
@@ -13,7 +14,7 @@ commander
 commander.parse(process.argv);
 
 if(typeof runnerFilePath === 'undefined') {
-    console.error('No command given');
+    commander.outputHelp();
     process.exit(1);
 }
 
