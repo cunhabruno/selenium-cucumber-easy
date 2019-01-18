@@ -14,7 +14,7 @@ export default {
     'LOGO' : By.id('logo')
 }
 ```
-Set the path of your mapped objects' files on runner file
+Set the path of your mapped objects' files on config file
 ```js
 import {By} from 'selenium-webdriver';
 export default {
@@ -23,7 +23,16 @@ export default {
 }
 ```
 Having this set you can start using the framework, you will only need to write feature files with the parameters you mapped.
+## Running the test
+If the framework was installed locally
+```js
+node_modules/selenium-cucumber-easy/bin/selenium-easy path/to/configfile.js
+```
 
+If the framework was installed globally
+```js
+selenium-easy path/to/configfile.js
+```
 ## Available BDD steps:
 open a URL in browser:
 ```gherkin
