@@ -1,5 +1,10 @@
 # selenium-cucumber-easy
 
+## Setup
+Install selenium-cucumber-easy in your project (you can also install globally with -g flag)
+```js
+npm install selenium-cucumber-easy
+```
 ## Basic usage
 Map the objects of your application in this format:
 ```js
@@ -58,4 +63,7 @@ There will be a lot of steps like: selecting item in a dropdown, verifying an el
 #### Automation Helper API
 You may also need to build your own steps, you can also do this with the help of out helper API.
 
-The helper API will cover almost all actions and validations a QA may want to do in your app.
+The helper API cover almost all actions and validations a QA may want to do in your app.
+
+## Sample app
+This sample app is automated using this framework: https://github.com/cunhabruno/escola-xyz
