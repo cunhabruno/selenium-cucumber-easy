@@ -1,6 +1,8 @@
 const path = require('path');
 const fs = require('fs');
 const webdriver = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
+const firefox= require('selenium-webdriver/firefox');
 const {Cli} = require('cucumber');
 class RunnerParser {
     constructor(runnerFilePath) {
@@ -22,12 +24,17 @@ class RunnerParser {
 
     generateSeleniumDriver() {
         if(this.runnerFileObj !== null) {
-            let capabilities = {
-                'browserName' : this.getBrowser(),
-                'acceptSslCerts': true,
-                'acceptInsecureCerts': true
-            };
-            return new webdriver.Builder().usingServer(this.runnerFileObj.seleniumAddress).withCapabilities(capabilities).build();
+            let capabilities;
+            if(typeof this.runnerFileObj.capabilities === 'undefined') {
+                capabilities = {
+                    'browserName' : this.getBrowser()
+                };
+            } else {
+                capabilities = this.runnerFileObj.capabilities;
+            }
+            return new webdriver.Builder()
+                .usingServer(this.runnerFileObj.seleniumAddress)
+                .withCapabilities(capabilities).build();
         }
     }
 
@@ -44,9 +51,25 @@ class RunnerParser {
     }
 
     getBrowser() {
-        return typeof this.runnerFileObj.browserName !== 'undefined'?
-            this.runnerFileObj.browserName :
-            'chrome';
+        if(typeof this.runnerFileObj.browserName !== 'string') {
+            return 'chrome';
+        }
+        let browserName = this.runnerFileObj.browserName.toLowerCase().replace(/[ _]/g, '');
+        if(browserName.match(/ie|internetexplorer/g)) {
+            return 'internet explorer'
+        } else if(browserName.match(/microsoftedge|edge/g)){
+            return 'MicrosoftEdge';
+        } else if(browserName.match(/chrome|firefox|safari/g)){
+            return browserName;
+        } else {
+            return 'chrome';
+        }
+    }
+
+    getErrorScreenshotsPath() {
+        return typeof this.runnerFileObj.errorScreenshotsPath !== 'undefined'?
+            this.runnerFileObj.errorScreenshotsPath :
+            '';
     }
 
     getParams() {

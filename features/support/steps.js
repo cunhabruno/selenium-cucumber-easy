@@ -1,8 +1,10 @@
-const {Given, Then, When, setDefaultTimeout} = require('cucumber');
+const {Given, Then, When, setDefaultTimeout, After} = require('cucumber');
 const HelperScripts = require('../../automation-scripts/helpers');
-const {pageObjectsParser} = require('../../main');
+const Utils = require('../../automation-scripts/utils')
+const {pageObjectsParser, runnerParser} = require('../../main');
 const assert = require('assert');
-
+const RunnerParser = require('../../runner-parser');
+const fs = require('fs');
 setDefaultTimeout(200000);
 
 /******************************************
@@ -219,4 +221,13 @@ Then(/^I can see "([^"]*)" on "([^"]*)" containing the text "([^"]*)"$/, async f
 
 Then(/^I can see "([^"]*)" (?:label |)containing the text "([^"]*)" on "([^"]*)"$/, async function(childObject, expectedText, parent) {
     await HelperScripts.checkElementTextContains(pageObjectsParser.get2LevelsLocator(parent, childObject), true, expectedText);
+});
+
+After(async function(scenario) {
+    if(scenario.result.status === 'failed') {
+        if(!fs.existsSync(runnerParser.getErrorScreenshotsPath())) {
+            fs.mkdirSync(runnerParser.getErrorScreenshotsPath(), {recursive: true}, err => {});
+        }
+       await Utils.takeScreenshot(runnerParser.getErrorScreenshotsPath() + '/errorOnLine' + scenario.sourceLocation.line)
+    }
 });
