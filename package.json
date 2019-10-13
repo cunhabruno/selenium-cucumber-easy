@@ -1,10 +1,11 @@
 {
-  "name": "selenium-cucumber-easy",
-  "version": "1.1.0",
-  "description": "",
-  "main": "index.js",
+  "name": "selenium-cucumber-framework",
+  "version": "1.2.3",
+  "description": "An automation framework that really works, I hope so",
+  "main": "./index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "node ./node_modules/eslint/bin/eslint.js ./"
   },
   "repository": {
     "type": "git",
@@ -17,28 +18,23 @@
   },
   "homepage": "https://github.com/cunhabruno/selenium-cucumber-easy#readme",
   "dependencies": {
-    "babel": "^6.23.0",
-    "babel-cli": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
-    "commander": "^2.16.0",
-    "cucumber": "^4.2.1",
+    "chalk": "^2.4.2",
+    "cucumber": "^5.1.0",
+    "glob": "^7.1.4",
+    "is-url": "^1.2.4",
+    "log4js": "^4.0.2",
     "path": "^0.12.7",
     "selenium-webdriver": "^4.0.0-alpha.1",
-    "babel-plugin-transform-runtime": "^6.23.0"
-  },
-  "babel": {
-    "presets": [
-      "env"
-    ],
-    "plugins": [
-      "transform-runtime"
-    ],
-    "retainLines": true
+    "yargs": "^13.2.2"
   },
   "bin": {
-    "selenium-easy": "bin/selenium-easy"
+    "selenium-cucumber-framework": "bin/selenium-cucumber-framework"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.0"
+  }
 }

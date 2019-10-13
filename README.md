@@ -1,22 +1,22 @@
 # selenium-cucumber-easy
 
 ## Setup
-Install selenium-cucumber-easy in your project (you can also install globally with -g flag)
+Install selenium-cucumber-framework in your project (you can also install globally with -g flag)
 ```js
 npm install selenium-cucumber-easy
 ```
 ## Basic usage
 Map the objects of your application in this format:
 ```js
-import {By} from 'selenium-webdriver';
+import {By} from 'selenium-cucumber-framework';
 export default {
     'UNIDADEDROPDOWN': By.name('superior'),
     'LOGO' : By.id('logo')
 }
 ```
-Set the path of your mapped objects' files on config file
+Create a config file to run the tests and set the path of your mapped objects' files on the config file
 ```js
-import {By} from 'selenium-webdriver';
+import {By} from 'selenium-cucumber-framework';
 export default {
     seleniumAddress : 'http://localhost:4444/wd/hub',
     pageObjects : ['/path/to/page-objects1', '/path/to/page-objects2']
@@ -26,12 +26,12 @@ Having this set you can start using the framework, you will only need to write f
 ## Running the test
 If the framework was installed locally
 ```js
-node_modules/selenium-cucumber-easy/bin/selenium-easy path/to/configfile.js
+node_modules/selenium-cucumber-framework/bin/selenium-cucumber-framework path/to/configfile.js
 ```
 
 If the framework was installed globally
 ```js
-selenium-easy path/to/configfile.js
+selenium-cucumber-framework path/to/configfile.js
 ```
 ## Available BDD steps:
 open a URL in browser:
@@ -70,9 +70,15 @@ Component Name = If you mapped with a 3 level JSON the child of page name can be
 There will be a lot of steps like: selecting item in a dropdown, verifying an element text, waiting an element to be displayed, checking the presence and visibility of an element, mouse hover an element etc...
 
 #### Automation Helper API
-You may also need to build your own steps, you can also do this with the help of out helper API.
+You may also need to build your own BDD steps using cucumber, you can do this with the helper API.
 
-The helper API cover almost all actions and validations a QA may want to do in your app.
+Example
+```js
+import { Helpers, Given, When, Then } from 'selenium-cucumber-framework';
+Given('I click on {string} on home page ', async function(elementName) {
+  await Helpers.clickOnElement(elementName);
+});
+```
 
 ## Sample app
 This sample app is automated using this framework: https://github.com/cunhabruno/escola-xyz

@@ -1,11 +1,11 @@
 class ObjectsHelper {
-    constructor(objectsHash) {
-        this.objects = objectsHash;
-    }
+  constructor(objectsHash) {
+    this.objects = objectsHash;
+  }
 
-    getElement(elementName) {
-        elementName = elementName.toUpperCase().replace(/ /g, '');
-        return this.objects[elementName];
-    }
+  getElement(elementName) {
+    elementName = elementName.toUpperCase().replace(/ /g, '');
+    return this.objects[elementName];
+  }
 }
 module.exports = ObjectsHelper;
