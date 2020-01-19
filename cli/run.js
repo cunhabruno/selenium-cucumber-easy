@@ -23,6 +23,7 @@ const testRunner = new TestRunner(configOptions.options);
 global.DEFAULT_WAIT_TIME_OUT = testRunner.getDefaultTimeOut();
 global.driver = testRunner.generateSeleniumDriver();
 global.params = testRunner.getParams();
+global.testArgs = testRunner.options
 
 const pageObjectsParser = new PageObjectsParse(testRunner.getPageObjects());
 

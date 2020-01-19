@@ -38,9 +38,11 @@ class TestRunner {
     const browserName = this.options.browserName.toLowerCase().replace(/[ _]/g, '');
     if (browserName.match(/ie|internetexplorer/g)) {
       return 'internet explorer';
-    } if (browserName.match(/microsoftedge|edge/g)) {
+    }
+    if (browserName.match(/microsoftedge|edge/g)) {
       return 'MicrosoftEdge';
-    } if (browserName.match(/chrome|firefox|safari/g)) {
+    }
+    if (browserName.match(/chrome|firefox|safari/g)) {
       return browserName;
     }
     return 'chrome';
@@ -87,9 +89,20 @@ class TestRunner {
       if (typeof obj.default !== 'undefined') {
         obj = obj.default;
       }
-      pageObjectsObj.push(obj);
+      pageObjectsObj.push(TestRunner.transformPageObjs(obj));
     });
     return pageObjectsObj;
+  }
+
+  static transformPageObjs(pageObjectsObj) {
+    return Object.fromEntries(
+      Object.entries(pageObjectsObj).map(([parentKey]) => {
+        const newChildObj = Object.fromEntries(
+          Object.entries(pageObjectsObj[parentKey]).map(([childKey, childValue]) => [childKey.toUpperCase(), childValue]),
+        );
+        return [parentKey.toUpperCase(), newChildObj];
+      }),
+    );
   }
 
   async getCucumberArgs() {
@@ -144,7 +157,7 @@ class TestRunner {
 
     if (isUrl(this.options.baseAppUrl)) {
       await driver.get(this.options.baseAppUrl);
-      await driver.manage().window().maximize();
+      // await driver.manage().window().maximize();
     }
     await this.executeBeforeStart();
     await cucumberCli.run().then(() => {
@@ -155,4 +168,5 @@ class TestRunner {
     });
   }
 }
+
 module.exports = TestRunner;
